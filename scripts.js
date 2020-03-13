@@ -1,3 +1,5 @@
+const outputEl = document.querySelector("#output");
+
 function captureVoice() {
   const recognition = new webkitSpeechRecognition();
 
@@ -6,13 +8,11 @@ function captureVoice() {
   recognition.continuous = true;
   recognition.start();
   recognition.onresult = evt => {
-    for (let i = evt.resultIndex; i < evt.results.length; i++) {
-      if (evt.results[i].isFinal) {
-        document.querySelector("#output").innerText = evt.results[
-          i
-        ][0].transcript.trim();
-        recognition.stop();
-      }
+    const result = evt.results[evt.results.length - 1];
+
+    if (result.isFinal) {
+      outputEl.innerText = result[0].transcript.trim();
+      recognition.stop();
     }
   };
 }
