@@ -9,7 +9,7 @@ try {
   try {
     API.recognition = new webkitSpeechRecognition();
   } catch {
-    alert("Your browser does not support the SpeechRecognition API");
+    alert("Seu navegador não tem suporte a API SpeechRecognition");
     buttonEl.setAttribute("disabled", true);
   }
 }
@@ -30,11 +30,11 @@ recognition.onresult = evt => {
 };
 
 recognition.onstart = evt => {
-  buttonEl.innerText = "Stop Voice Capture";
+  buttonEl.innerText = "Parar captura de voz";
   buttonEl.setAttribute("onclick", "recognition.stop()");
 };
 
 recognition.onend = evt => {
-  buttonEl.innerText = "Start Voice Capture";
+  buttonEl.innerText = "Iniciar captura de voz";
   buttonEl.setAttribute("onclick", "recognition.start()");
 };
