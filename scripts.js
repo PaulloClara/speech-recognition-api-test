@@ -1,7 +1,20 @@
 const outputEl = document.querySelector("#output");
 const buttonEl = document.querySelector("#capture");
 
-const recognition = new webkitSpeechRecognition();
+const API = { recognition: {} };
+
+try {
+  API.recognition = new SpeechRecognition();
+} catch {
+  try {
+    API.recognition = new webkitSpeechRecognition();
+  } catch {
+    alert("Your browser does not support the SpeechRecognition API");
+    buttonEl.setAttribute("disabled", true);
+  }
+}
+
+const { recognition } = API;
 
 recognition.lang = "pt-BR";
 recognition.continuous = true;
