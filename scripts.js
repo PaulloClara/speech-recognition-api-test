@@ -1,12 +1,13 @@
 const outputEl = document.querySelector("#output");
+const buttonEl = document.querySelector("#capture");
+
+const recognition = new webkitSpeechRecognition();
+
+recognition.lang = "pt-BR";
+recognition.continuous = true;
+recognition.interimResults = true;
 
 function captureVoice() {
-  const recognition = new webkitSpeechRecognition();
-
-  recognition.interimResults = true;
-  recognition.lang = "pt-BR";
-  recognition.continuous = true;
-  recognition.start();
   recognition.onresult = evt => {
     const result = evt.results[evt.results.length - 1];
 
@@ -15,4 +16,16 @@ function captureVoice() {
       recognition.stop();
     }
   };
+
+  recognition.onstart = evt => {
+    buttonEl.innerText = "Stop Voice Capture";
+    buttonEl.setAttribute("onclick", "recognition.stop()");
+  };
+
+  recognition.onend = evt => {
+    buttonEl.innerText = "Start Voice Capture";
+    buttonEl.setAttribute("onclick", "captureVoice()");
+  };
+
+  recognition.start();
 }
